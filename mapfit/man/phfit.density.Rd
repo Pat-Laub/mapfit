@@ -6,21 +6,23 @@
   estimates PH parameters from density function.
 }
 \usage{
-phfit.density(ph, f, deformula = zero.to.inf,
-  weight.zero = .Machine$double.eps,
-  weight.reltol = sqrt(.Machine$double.eps),
+phfit.density(ph, f,
   method = c("all", "increment"), lbound = 1, ubound = NULL,
+  deformula = deformula.zeroinf, weight.zero = 1.0e-12,
+  weight.reltol = 1.0e-8, start.divisions = 8, max.iter = 12,
   control = list(), verbose = list(), ...)
 }
 \arguments{
   \item{ph}{an object of S4 class for MAP. The estimation algorithm is selected depending on thie class.}
   \item{f}{a faunction object for a density function.}
-  \item{deformula}{an object for formulas of numerical integration. It is not necessary to change it when the density function is defined on the positive domain [0,infinity).}
-  \item{weight.zero}{a absolute value which is regarded as zero in numerical integration.}
-  \item{weight.reltol}{a value for precision of numerical integration.}
   \item{method}{the name of estimation method for hyper Erlang (\code{\linkS4class{herlang}}).}
   \item{lbound}{a value for lower limit for the number of states in hyper Erlang (\code{\linkS4class{herlang}}).}
   \item{ubound}{a value for upper limit for the number of states in hyper Erlang (\code{\linkS4class{herlang}}).}
+  \item{deformula}{an object for formulas of numerical integration. It is not necessary to change it when the density function is defined on the positive domain [0,infinity).}
+  \item{weight.zero}{a absolute value which is regarded as zero in numerical integration.}
+  \item{weight.reltol}{a value for precision of numerical integration.}
+  \item{start.divisions}{a value for starting value of divitions in deformula.}
+  \item{max.iter}{a value for the maximum number of iterations to increase divisions in deformula.}
   \item{control}{a list of parameters for controlling the fitting process.}
   \item{verbose}{a list of parameters for displaying the fitting process.}
   \item{\dots}{further arguments for methods, which are also used to send the arguments to density function.}
@@ -31,6 +33,7 @@ phfit.density(ph, f, deformula = zero.to.inf,
   \item{llf}{a value of the maximum log-likelihood (a netative value of the cross entropy).}
   \item{df}{a value of degrees of freedom of the model.}
   \item{aic}{a value of Akaike information criterion (this is not meaningless in this case).}
+  \item{KL}{a value of Kullback-Leibler divergence.}
   \item{iter}{the number of iterations.}
   \item{convergence}{a logical value for the convergence of estimation algorithm.}
   \item{ctime}{computation time (user time).}

@@ -6,6 +6,7 @@ useDynLib(mapfit, .registration=TRUE)
 
 import("methods")
 importFrom("Matrix", sparseMatrix, diag)
+import("deformula")
 
 ## Factories of class
 
