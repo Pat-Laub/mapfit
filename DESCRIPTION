@@ -1,6 +1,6 @@
 Package: mapfit
-Version: 0.9.7
-Date: 2015-03-24
+Version: @version@
+Date: @date@
 Title: A Tool for PH/MAP Parameter Estimation
 Type: Package
 Author: Hiroyuki Okamura
@@ -11,7 +11,3 @@ Description: Estimation methods for phase-type
 Depends: methods, Matrix
 Encoding: UTF-8
 License: GPL (>= 2)
-Packaged: 2015-03-24 08:23:00 UTC; okamu
-NeedsCompilation: yes
-Repository: CRAN
-Date/Publication: 2015-03-24 18:15:53

@@ -13,8 +13,8 @@ Estimation methods for phase-type
 \tabular{ll}{
 Package: \tab mapfit\cr
 Type: \tab Package\cr
-Version: \tab 0.9.7\cr
-Date: \tab 2015-03-24\cr
+Version: \tab @version@\cr
+Date: \tab @date@\cr
 License: \tab GPL (>= 2)\cr
 LazyLoad: \tab yes\cr
 }
