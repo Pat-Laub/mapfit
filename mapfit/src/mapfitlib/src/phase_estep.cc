@@ -161,6 +161,10 @@ namespace mapfit {
 
 		double tmax = dmax(tdat);
 		double weight;
+
+		if (qv > 500)
+		  qv = 500;
+
 		sci::range r(0, pois::rightbound(qv*tmax, poi_eps) + 1);
 		sci::vector<double> poi(r.size());
 
