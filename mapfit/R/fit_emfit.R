@@ -27,9 +27,30 @@ emfit <- function(model, data, initialize = TRUE, control = list(), verbose = li
   model <- emfit.init(model, data, verbose, ...)
 
   eres0 <- emfit.estep(model, data, ...)
-  model0 <- emfit.mstep(model, eres0$eres, data, ...)
+  if (is.finite(eres0$llf) && eres0$llf <= 0) {
+    model0 <- emfit.mstep(model, eres0$eres, data, ...)
+  } else {
+    eres1$llf <- NaN
+  }
+
+  if (!is.finite(eres0$llf) || !all(is.finite(model0@Q))) {
+    warning("LLF / Q matrix problem from first guess")
+    error <- c(Inf, Inf)
+    model1 <- model0
+
+    return(list(model=model,
+      llf=NaN, iter=0, convergence=FALSE,
+      aerror=0, rerror=0, df=NaN, aic=NaN,
+      control=con, verbose=ver)
+    )
+  }
+
   for (iter in 1:con$maxiter) {
     eres1 <- emfit.estep(model0, data, ...)
+
+    if (eres1$llf > 0) {
+	eres1$llf <- NaN
+    }
 
     if (!is.finite(eres1$llf)) {
       warning(gettextf("LLF becomes Inf/NaN/NA at %d", iter))
@@ -39,6 +60,12 @@ emfit <- function(model, data, initialize = TRUE, control = list(), verbose = li
     }
 
     model1 <- emfit.mstep(model0, eres1$eres, data, ...)
+    if (any(!is.finite(model1@Q))) {
+      warning(gettextf("Q matrix goes NaN at %d", iter))
+      error <- c(Inf, Inf)
+      model1 <- model0
+      break
+    }
 
     error <- c(abs(eres1$llf - eres0$llf), abs((eres1$llf - eres0$llf)/eres0$llf))
 
